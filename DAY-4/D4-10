@@ -1,0 +1,46 @@
+### 10. Apriori vs FP-Growth (ARFF dataset)
+transactions2 <- list(
+  c("SONY","BPL","LG"),
+  c("BPL","SAMSUNG"),
+  c("BPL","ONIDA"),
+  c("SONY","BPL","SAMSUNG"),
+  c("SONY","ONIDA"),
+  c("BPL","ONIDA"),
+  c("SONY","ONIDA"),
+  c("SONY","BPL","ONIDA","LG"),
+  c("SONY","BPL","ONIDA")
+)
+trans2 <- as(transactions2, "transactions")
+rules_apriori2 <- apriori(trans2, parameter=list(supp=0.2, conf=0.5))
+inspect(rules_apriori2)
+rules_fp2 <- eclat(trans2, parameter=list(supp=0.2))
+inspect(rules_fp2)
+
+### 11. Normalization (strike rates)
+sr <- c(100,70,60,90,90)
+min_max <- (sr - min(sr)) / (max(sr)-min(sr))
+z_score <- (sr - mean(sr)) / sd(sr)
+mad_val <- mean(abs(sr - mean(sr)))
+z_score_mad <- (sr - mean(sr)) / mad_val
+decimal_scaling <- sr / 100
+min_max; z_score; z_score_mad; decimal_scaling
+
+### 12. Car AvgSpeed & TotalTime
+avg_speed <- c(78,81,82,74,83,82,77,80,70)
+total_time <- c(39,37,36,42,35,36,40,38,46)
+sd(avg_speed); sd(total_time)
+var(avg_speed); var(total_time)
+
+### 13. Apriori & FP-Growth comparison
+transactions3 <- list(
+  c("M","O","N","K","E","Y"),
+  c("D","O","N","K","E","Y"),
+  c("M","A","K","E"),
+  c("M","U","C","K","Y"),
+  c("C","O","O","K","I","E")
+)
+trans3 <- as(transactions3, "transactions")
+rules_apriori3 <- apriori(trans3, parameter=list(supp=0.3, conf=0.7))
+inspect(rules_apriori3)
+rules_fp3 <- eclat(trans3, parameter=list(supp=0.3))
+inspect(rules_fp3)
